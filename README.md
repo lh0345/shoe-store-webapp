@@ -72,6 +72,7 @@ shoe-store-template/
 
 ```bash
 npm install
+# Optional: copy .env.template → .env.local for local env (gitignored; never commit secrets)
 npm run dev          # Python server — see package.json
 npm test
 npm run lint

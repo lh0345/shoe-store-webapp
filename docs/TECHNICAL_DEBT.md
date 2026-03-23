@@ -1,5 +1,12 @@
 # Technical debt & domain audits
 
+## Remediation — 2026-03-24 (LoginView submit tests, ARCHITECTURE links, env template)
+
+- **`tests/LoginView.test.js`:** Async submit path — **`authService.login`** called with username/password; failure shows **`#login-error`**. Success redirect (`location.href`) not asserted (jsdom **`Location`** `href` setter is not spyable).
+- **`ARCHITECTURE.md`:** Admin section links **`docs/SECURITY.md`** and **`docs/SUPABASE_FORK.md`**.
+- **`.env.template`:** Comment that **`SUPABASE_SERVICE_ROLE_KEY`** must not ship in the browser bundle.
+- **`README.md`:** Note copying **`.env.template`** → **`.env.local`**.
+
 ## Remediation — 2026-03-24 (optionals: security docs, Supabase fork guide, banners, tests, audit)
 
 - **Docs:** [`docs/SECURITY.md`](./SECURITY.md) (admin auth, localStorage, audit posture) and [`docs/SUPABASE_FORK.md`](./SUPABASE_FORK.md) (env, RLS examples, fork steps). Linked from [`README.md`](../README.md) and [`DEPLOY.md`](./DEPLOY.md).
