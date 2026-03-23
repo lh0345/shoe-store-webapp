@@ -128,6 +128,19 @@ npm test
 
 That's it. No fancy deployment scripts, no automated setup, no SaaS magic.
 
+### Git and hosting
+
+The repository uses the **`main`** branch. To publish to GitHub (or another host), add a remote and push:
+
+```bash
+git remote add origin https://github.com/<you>/<repo>.git
+git push -u origin main
+```
+
+**Vercel:** import the repo and keep the production branch on **`main`**; configuration lives in `vercel.json` at the project root. If the dashboard **build** step feels too heavy (lint + test + webpack), you can relax it there.
+
+**Husky:** after `npm install`, pre-commit runs **lint** then **tests**. Commits fail if either step fails.
+
 ---
 
 ## What's Missing (Major Gaps)

@@ -106,7 +106,7 @@ Governance checklist: `.governance/subplans/domain_linkage_audit.md`. Re-run aft
 
 ### A12 — Jest, ESLint, Husky
 
-- **Observation:** Coverage paths fixed; Husky pre-commit runs lint then test; requires a git repo for hooks to matter. Repository root is initialized with **`git init`** so hooks can run after `npm install` (add `origin` when you use GitHub/Vercel).
+- **Observation:** Coverage paths fixed; Husky pre-commit runs lint then test; requires a git repo for hooks to matter. Repository uses **`main`** with an initial commit; add **`origin`** and push when using GitHub/Vercel (see `README.md` → Git and hosting).
 - **Risk:** Test surface remains lighter for Router/views/auth than for services — regressions possible in thinly tested paths.
 - **Bug-suspected:** None from config path fixes (remediated).
 
