@@ -19,14 +19,22 @@ from functools import wraps
 
 # Third-party imports (install with: pip install supabase-py python-dotenv)
 try:
-    from supabase import create_client, Client
     from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_a, **_k):
+        pass
+
+try:
+    from supabase import create_client, Client
     SUPABASE_AVAILABLE = True
 except ImportError:
     SUPABASE_AVAILABLE = False
     print("⚠️  Supabase dependencies not installed. Install with: pip install supabase-py python-dotenv")
 
-# Load environment variables
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+os.chdir(_REPO_ROOT)
+
+# Load environment variables from repository root
 load_dotenv('.env.local')
 
 PORT = int(os.environ.get('PORT', 8002))

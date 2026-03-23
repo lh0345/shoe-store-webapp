@@ -142,7 +142,7 @@ Remediation IDs (**B-***, **ADR-***) are **placeholders** — add rows when you 
 | Field | Value |
 |-------|--------|
 | **Goal** | Map `readJSON` / `writeJSON`, `/api/products`, `/api/wishlist`, `API_KEY`, fallbacks to `localStorage`. |
-| **Paths** | `src/services/DataService.js`, `server.py` (POST handlers, `/config.js`), optional `server_secure.py` if used. |
+| **Paths** | `src/services/DataService.js`, `scripts/server.py` (POST handlers, `/config.js`), optional `scripts/server_secure.py` if used. |
 | **Trace** | Production static hosting without Python — which calls always fail and which fallbacks apply. |
 | **Outputs** | `Domain audit — Stage A9` in `docs/TECHNICAL_DEBT.md`. |
 

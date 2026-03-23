@@ -25,7 +25,7 @@ How optional services fit this **vanilla JS** template and **why** they are sepa
 | **Supabase client in browser** (`@supabase/supabase-js`) | Reads/writes allowed by **RLS** (e.g. public products, user-owned rows). |
 | **Supabase Edge Functions** | Secrets, payment webhooks, privileged logic — **not** safe in static JS. |
 | **Your own server / serverless routes** (`/api/*`) | Same as Edge Functions: hold **service role** or third-party secrets; validate sessions. |
-| **Python `server.py` (local)** | Dev-only parity; production is usually static + serverless. |
+| **Python `scripts/server.py` (local)** | Dev-only parity; production is usually static + serverless. |
 
 **Why RLS:** The anon key is **public**. RLS is how Postgres enforces “this user may only see their rows.” Without it, you are relying on obscurity.
 

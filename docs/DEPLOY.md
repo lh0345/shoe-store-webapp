@@ -16,7 +16,7 @@ After changing `vercel.json` (e.g. admin redirect fix), trigger a **new producti
 
 | Mode | When to use |
 |------|-------------|
-| **ES modules** (default root `index.html`) | Local dev with `python3 server.py`, quick edits, many module requests. |
+| **ES modules** (default root `index.html`) | Local dev with `python3 scripts/server.py`, quick edits, many module requests. |
 | **Webpack bundle** | Production-style: smaller initial parse path, lazy **admin** chunk under `/dist/`. |
 
 After `npm run build`:

@@ -8,11 +8,12 @@ import http.server
 import socketserver
 import os
 import json
-from pathlib import Path
-
-import os
 import time
 from collections import defaultdict
+from pathlib import Path
+
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+os.chdir(_REPO_ROOT)
 
 API_KEY = os.environ.get('API_KEY', 'demo-key-123')  # Default for demo
 

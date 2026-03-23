@@ -20,6 +20,8 @@ Typical names (align with your host and `window.ENV_CONFIG`):
 
 Load them into the shell via **`config.js`** or your host’s env injection so `window.ENV_CONFIG` (or `process.env` at build time) exposes them.
 
+**Database bootstrap:** an example full schema (tables, RLS, triggers) is in **`scripts/sql/setup.sql`**. Run it in the Supabase SQL editor only after reviewing and adapting policies for your fork.
+
 ## 3. Client initialization (fork)
 
 In a fork, you would replace the null export with something like:

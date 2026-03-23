@@ -52,11 +52,14 @@ This is **not** a hosted SaaS product, multi-tenant platform, or turnkey payment
 shoe-store-template/
 ├── index.html                 # Default shell: loads /src/app.js (ES modules)
 ├── config.js                  # Static ENV_CONFIG when Python /config is absent
-├── data/products.json
+├── data/                      # products.json, wishlist_*.json, products-template.csv
 ├── public/css/ , public/libs/
+├── scripts/                   # dev server (Python), spa-redirect, sync, dist index helper
+│   ├── server.py              # Local dev + GET/POST /api/* parity
+│   ├── server_secure.py       # Optional Supabase-aware dev server
+│   └── sql/setup.sql          # Supabase schema (run in SQL editor)
 ├── src/                       # app.js, config/, views/, services/, …
 ├── dist/                      # produced by npm run build (gitignored)
-├── server.py                  # Dev server + optional APIs
 ├── webpack.config.cjs
 ├── vercel.json
 ├── ARCHITECTURE.md

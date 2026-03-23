@@ -17,7 +17,7 @@ This file is the **stable rule anchor** for stage execution. Do not edit it to e
 | **Routing** | Client-side `src/router/Router.js` + views under `src/views/` |
 | **Data (catalog)** | Static `data/products.json` (loaded in `src/data/products.js`) |
 | **Persistence** | `localStorage`, optional `POST /api/*` when Python dev server runs |
-| **Dev server** | Python 3: `server.py` (and optional `server_secure.py`) — **not** the Vercel production runtime unless replaced with serverless |
+| **Dev server** | Python 3: `scripts/server.py` (and optional `scripts/server_secure.py`) — **not** the Vercel production runtime unless replaced with serverless |
 | **Build (optional)** | Webpack (`webpack.config.cjs` → `dist/bundle.js`); `index.html` may load `src/app.js` directly — know which path you ship |
 | **Deploy** | Static hosting (e.g. Vercel via `vercel.json`) |
 | **Quality** | ESLint, Prettier, Jest (jsdom), Husky |

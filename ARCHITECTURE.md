@@ -64,7 +64,7 @@ Only one entry path should be active in **`index.html`** for a given deployment.
 
 ## Optional Python dev server
 
-- **`server.py`** (and related scripts) can expose **`/api/*`** for wishlist or admin sync during development. **Static production hosts** (e.g. Vercel) typically **do not** run this Python server; behavior falls back to **`fetch('/data/products.json')`** and **`localStorage`** as implemented in **`DataService`**.
+- **`scripts/server.py`** (and optional **`scripts/server_secure.py`**) can expose **`/api/*`** for wishlist or admin sync during development. **Static production hosts** (e.g. Vercel) typically **do not** run this Python server; behavior falls back to **`fetch('/data/products.json')`** and **`localStorage`** as implemented in **`DataService`**.
 
 ---
 
