@@ -1,6 +1,7 @@
 # Deploy & fork checklist
 
 Vanilla JS storefront template: **contact via email / WhatsApp**, **no payment stack** in the app. Use this with [`ARCHITECTURE.md`](../ARCHITECTURE.md) and [`README.md`](../README.md).
+**Security posture:** [`SECURITY.md`](./SECURITY.md) · **Supabase (fork):** [`SUPABASE_FORK.md`](./SUPABASE_FORK.md)
 
 ## Git remote and push
 
@@ -37,15 +38,15 @@ Do **not** deploy only `bundle.js` without **`admin.*.js`** when using the bundl
 
 ## Supabase
 
-`src/config/supabase.js` exports **`supabase === null`**. The app is designed for **static JSON + localStorage**. Re-enabling a browser Supabase client requires **env keys, RLS review**, and governance sign-off (see `.governance/MASTER_GOVERNANCE.md`).
+`src/config/supabase.js` exports **`supabase === null`**. The app is designed for **static JSON + localStorage**. Re-enabling a browser Supabase client requires **env keys, RLS review**, and governance sign-off (see `.governance/MASTER_GOVERNANCE.md`). Step-by-step fork notes: **[`SUPABASE_FORK.md`](./SUPABASE_FORK.md)**.
 
 ## Admin authentication
 
-Sessions and users live in **localStorage** with client-side checks only. Suitable for **demo / single-operator** use. For real multi-user admin or sensitive data, add a **server session**, HTTPS, and secrets handling — not covered by this template’s default scope.
+Sessions and users live in **localStorage** with client-side checks only. Suitable for **demo / single-operator** use. For real multi-user admin or sensitive data, add a **server session**, HTTPS, and secrets handling — not covered by this template’s default scope. See **[`SECURITY.md`](./SECURITY.md)**.
 
 ## Holiday banners
 
-Banners use **local calendar** `YYYY-MM-DD` ranges (not UTC-midnight parsing). Tune dates in admin storage or defaults in `HolidayBannerService`.
+Banners use **local calendar** `YYYY-MM-DD` ranges (not UTC-midnight parsing). **Invalid dates** (e.g. `2025-02-31`) and **end before start** are ignored for that banner. Tune dates in admin storage or defaults in `HolidayBannerService`.
 
 ## Contact & social placeholders
 

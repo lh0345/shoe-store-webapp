@@ -1,5 +1,12 @@
 # Technical debt & domain audits
 
+## Remediation — 2026-03-24 (optionals: security docs, Supabase fork guide, banners, tests, audit)
+
+- **Docs:** [`docs/SECURITY.md`](./SECURITY.md) (admin auth, localStorage, audit posture) and [`docs/SUPABASE_FORK.md`](./SUPABASE_FORK.md) (env, RLS examples, fork steps). Linked from [`README.md`](../README.md) and [`DEPLOY.md`](./DEPLOY.md).
+- **Holiday banners:** `YYYY-MM-DD` strings must be **real calendar days**; **end before start** is skipped. `getCountdown` returns `null` for invalid end dates.
+- **Tests:** [`tests/LoginView.test.js`](../tests/LoginView.test.js); **`AdminView`** tab switch; **`AuthService`** login validation + unknown user; extra **`HolidayBannerService`** cases.
+- **`npm audit`:** Re-ran **`npm audit fix`**; **27** findings remain, mostly **`vercel`** CLI transitives (same as before: **`npm audit fix --force`** would downgrade to a much older `vercel` — not applied). See [`SECURITY.md`](./SECURITY.md).
+
 ## Remediation — 2026-03-24 (docs, bundle index, holidays, tests)
 
 - **Deploy / entry:** Added [`docs/DEPLOY.md`](./DEPLOY.md) (git remote, Vercel redeploy, ES modules vs bundle, audit, Supabase, admin auth, banners, social). **`npm run build`** runs **`scripts/write-dist-index.mjs`** to emit **`dist/index.html`** loading **`/dist/bundle.js`**. Webpack **`output.publicPath`** is **`/dist/`** in production for async chunks.

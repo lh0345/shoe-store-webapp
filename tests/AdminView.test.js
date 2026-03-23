@@ -63,4 +63,21 @@ describe('AdminView', () => {
     expect(el.querySelector('#brand-name').value).toBe('CustomBrand');
     expect(el.querySelector('#contact-email').value).toBe('a@b.c');
   });
+
+  test('settings tab click shows settings content and hides products', async () => {
+    const view = new AdminView(makeServices());
+    const el = await view.render();
+
+    const productsPane = el.querySelector('.admin-tab-content[data-content="products"]');
+    const settingsPane = el.querySelector('.admin-tab-content[data-content="settings"]');
+    const settingsTab = el.querySelector('.admin-tab[data-tab="settings"]');
+
+    expect(productsPane.style.display).toBe('block');
+    expect(settingsPane.style.display).toBe('none');
+
+    settingsTab.click();
+
+    expect(settingsPane.style.display).toBe('block');
+    expect(productsPane.style.display).toBe('none');
+  });
 });

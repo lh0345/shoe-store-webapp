@@ -1,22 +1,34 @@
 /* HolidayBannerService.js - Macedonia holiday sales banners with countdown */
 
+/**
+ * True if y/m/d is a real calendar day (rejects 2025-02-31 etc.; JS Date rollover is not accepted).
+ */
+function isValidCalendarDay(y, m, d) {
+  if (!Number.isInteger(y) || !Number.isInteger(m) || !Number.isInteger(d)) return false;
+  if (m < 1 || m > 12 || d < 1 || d > 31) return false;
+  const dt = new Date(y, m - 1, d);
+  return dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d;
+}
+
 /** YYYY-MM-DD interpreted as local calendar day start (avoids UTC-only parsing quirks). */
 function parseLocalDayStart(ymd) {
-  const parts = String(ymd).split('-').map(Number);
+  const parts = String(ymd).trim().split('-').map(Number);
   if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) {
     return new Date(NaN);
   }
   const [y, m, d] = parts;
+  if (!isValidCalendarDay(y, m, d)) return new Date(NaN);
   return new Date(y, m - 1, d, 0, 0, 0, 0);
 }
 
 /** Inclusive end of local calendar day for YYYY-MM-DD. */
 function parseLocalDayEnd(ymd) {
-  const parts = String(ymd).split('-').map(Number);
+  const parts = String(ymd).trim().split('-').map(Number);
   if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) {
     return new Date(NaN);
   }
   const [y, m, d] = parts;
+  if (!isValidCalendarDay(y, m, d)) return new Date(NaN);
   return new Date(y, m - 1, d, 23, 59, 59, 999);
 }
 
@@ -177,6 +189,13 @@ export class HolidayBannerService {
       const startDate = parseLocalDayStart(banner.startDate);
       const endDate = parseLocalDayEnd(banner.endDate);
 
+      if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
+        continue;
+      }
+      if (endDate < startDate) {
+        continue;
+      }
+
       if (now >= startDate && now <= endDate) {
         return banner;
       }
@@ -200,6 +219,7 @@ export class HolidayBannerService {
   getCountdown(endDate) {
     const now = new Date();
     const end = parseLocalDayEnd(endDate);
+    if (Number.isNaN(end.getTime())) return null;
     const diff = end - now;
 
     if (diff <= 0) return null;
