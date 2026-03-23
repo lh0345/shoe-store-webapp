@@ -56,14 +56,19 @@ describe('WishlistService', () => {
   });
 
   test('should handle data service errors', async () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
     mockDataService.saveWishlist.mockRejectedValue(new Error('Save failed'));
 
-    const result = await wishlistService.toggle(1);
+    try {
+      const result = await wishlistService.toggle(1);
 
-    // Optimistic update: item is added even if save fails
-    expect(result.success).toBe(true);
-    expect(result.added).toBe(true);
-    expect(wishlistService.isInWishlist(1)).toBe(true);
+      // Optimistic update: item is added even if save fails
+      expect(result.success).toBe(true);
+      expect(result.added).toBe(true);
+      expect(wishlistService.isInWishlist(1)).toBe(true);
+    } finally {
+      consoleError.mockRestore();
+    }
   });
 
   test('should load wishlist from storage', async () => {

@@ -11,6 +11,7 @@
     "start": "python3 server.py",
     "test": "jest",
     "test:watch": "jest --watch",
+    "check": "jest --runInBand && eslint src/ tests/ && npm run build",
     "lint": "eslint src/ tests/",
     "lint:fix": "eslint src/ tests/ --fix",
     "format": "prettier --write src/ tests/ *.js *.json",

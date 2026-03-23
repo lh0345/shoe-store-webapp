@@ -74,6 +74,7 @@ npm run dev          # Python server — see package.json
 npm test
 npm run lint
 npm run build        # Webpack + dist/index.html (bundle entry)
+npm run check        # test + lint + build (pre-push gate)
 ```
 
 ---

@@ -195,12 +195,15 @@ export class AuthService {
   }
 
   async initializeDefaultAdmin() {
+    // Jest/jsdom can tear down `localStorage` before this async work finishes — avoid noisy errors.
+    if (typeof localStorage === 'undefined') return;
     try {
       const users = this.getUsers();
 
       if (users.length === 0) {
         // Hash the default password
         const hashedPassword = await hashPassword('admin123');
+        if (typeof localStorage === 'undefined') return;
 
         // Create default admin account
         const defaultAdmin = new User({
@@ -222,6 +225,7 @@ export class AuthService {
   }
   getUsers() {
     try {
+      if (typeof localStorage === 'undefined') return [];
       const data = localStorage.getItem(this.usersKey);
       if (!data) return [];
       return JSON.parse(data).map((u) => new User(u));
@@ -235,6 +239,7 @@ export class AuthService {
   }
 
   saveUser(user) {
+    if (typeof localStorage === 'undefined') return;
     const users = this.getUsers();
     const index = users.findIndex((u) => u.id === user.id);
     if (index > -1) {
@@ -405,6 +410,7 @@ export class AuthService {
 
   loadSessionSync() {
     try {
+      if (typeof localStorage === 'undefined') return;
       // Load session synchronously from localStorage
       const data = localStorage.getItem(this.storageKey);
       if (data) {
