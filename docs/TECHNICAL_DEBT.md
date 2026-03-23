@@ -34,6 +34,13 @@ Addressed findings from **A1 / A4 / A5 / A9** slices (see `.governance/STAGE_ASS
 - **A9 / tests:** New `tests/DataService.test.js` covers `readJSON('products')` via **`/data/products.json`** and **localStorage** fallback.
 - **A12 / Husky:** `.husky/pre-commit` runs **`npm test`** after **`npm run lint`** (commits fail if tests fail; requires a git repo with husky installed).
 
+## Remediation — 2026-03-24 (Router tests, dependency hygiene)
+
+- **npm audit:** Ran **`npm audit fix`** (non-breaking); count of reported issues dropped. Remaining findings are largely **`vercel`** CLI transitive packages (fix would be a major bump — review before `npm audit fix --force`).
+- **jspdf:** Dependency raised to **`^4.2.1`** for the npm advisory chain. Admin PDF still loads **`/public/libs/jspdf.min.js`** in the browser; refresh that vendor copy from the same major line when you next touch PDF export.
+- **A3 / `Router`:** Constructor accepts optional **`{ autoInit: false }`** so Jest can call **`handleRoute()`** without registering global listeners. **`tests/Router.test.js`** covers home, collection, wishlist, admin routes, **`/product`** without slug → **`notFound`**, slug routing, and unknown paths.
+- **A12:** **`jest.config.js`** `collectCoverageFrom` now includes **`src/router/**/*.js`**.
+
 ## Domain audit — Stage A1–A12 (template snapshot, 2026-03-23)
 
 Governance checklist: `.governance/subplans/domain_linkage_audit.md`. Re-run after large refactors and append dated subsections. Below: **Observation** / **Risk** / **Bug-suspected** per stage (many items addressed in remediation sections above).
@@ -52,7 +59,7 @@ Governance checklist: `.governance/subplans/domain_linkage_audit.md`. Re-run aft
 
 ### A3 — Router and navigation
 
-- **Observation:** `Router.js` maps paths to view handlers; `/product` and `/product/` without slug route to `notFound` (remediated).
+- **Observation:** `Router.js` maps paths to view handlers; `/product` and `/product/` without slug route to `notFound` (remediated). Optional **`{ autoInit: false }`** supports unit tests; **`tests/Router.test.js`** exercises `handleRoute` dispatch.
 - **Risk:** Deep links and static-host SPA fallbacks must stay aligned (`vercel.json`, `404.html` patterns).
 - **Bug-suspected:** None open for empty product slug after A3 fix.
 

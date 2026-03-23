@@ -1,9 +1,11 @@
 /* Router.js - Clean URL routing with History API */
 
 export class Router {
-  constructor(routes = {}) {
+  constructor(routes = {}, options = {}) {
     this.routes = routes;
-    this.init();
+    if (options.autoInit !== false) {
+      this.init();
+    }
   }
 
   init() {

@@ -35,7 +35,7 @@
     "bcrypt": "^6.0.0",
     "csv-parse": "^5.5.3",
     "dotenv": "^16.3.1",
-    "jspdf": "^3.0.4"
+    "jspdf": "^4.2.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.5",

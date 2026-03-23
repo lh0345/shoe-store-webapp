@@ -9,6 +9,7 @@ export default {
   testMatch: ['<rootDir>/tests/**/*.test.js'],
   collectCoverageFrom: [
     'src/models/**/*.js',
+    'src/router/**/*.js',
     'src/utils/**/*.js',
     'src/services/**/*.js',
   ],
