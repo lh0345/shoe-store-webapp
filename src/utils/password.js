@@ -12,7 +12,7 @@ export async function hashPassword(password) {
     const data = encoder.encode(password);
 
     // Use SHA-256 for hashing
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashBuffer = await globalThis.crypto.subtle.digest('SHA-256', data);
 
     // Convert to base64
     const hashArray = Array.from(new Uint8Array(hashBuffer));
@@ -47,7 +47,7 @@ export async function verifyPassword(password, hash) {
  */
 export function generateSalt() {
   const array = new Uint8Array(16);
-  crypto.getRandomValues(array);
+  globalThis.crypto.getRandomValues(array);
   return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 

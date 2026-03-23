@@ -2,8 +2,7 @@
 import { webcrypto } from 'node:crypto';
 import { TextEncoder, TextDecoder } from 'util';
 
-if (typeof globalThis.crypto === 'undefined' || !globalThis.crypto?.subtle) {
-  globalThis.crypto = webcrypto;
-}
+// jsdom provides a partial `crypto`; replace so `crypto.subtle.digest` works in tests (password.js).
+globalThis.crypto = webcrypto;
 globalThis.TextEncoder = TextEncoder;
 globalThis.TextDecoder = TextDecoder;
