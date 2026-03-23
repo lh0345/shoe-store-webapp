@@ -46,6 +46,7 @@ Addressed findings from **A1 / A4 / A5 / A9** slices (see `.governance/STAGE_ASS
 - **`vercel` (devDependency):** Upgraded to **v50** to track current CLI releases. **`npm audit`** may still report issues inside the CLI’s transitive graph; treat **`vercel` as a dev tool**, not the production browser bundle — revisit with **`npm audit fix`** / upstream releases periodically (avoid blind **`--force`**).
 - **jspdf / `public/libs`:** Replaced **`public/libs/jspdf.min.js`** with **`jspdf.umd.min.js`** from **`jspdf@^4.2.1`** (`node_modules`) so the script the admin PDF loader fetches matches the npm major line.
 - **A11 / Webpack:** **`AdminView`** and **`LoginView`** are loaded with **`import()`** and chunk name **`admin`**; production build outputs **`bundle.js`** (~239 KiB min) plus **`admin.[hash].js`** (~102 KiB). **`webpack.config.cjs`** sets **`output.chunkFilename`** for hashed async chunks. Deploy **`dist/`** in full when using the bundle entry.
+- **`vercel.json`:** Removed **`/admin` → `/admin-login`** redirect — it conflicted with the SPA **`/admin`** dashboard route (router handles auth and redirects client-side). **`public/libs`:** removed duplicate **`jspdf.umd.min.js`** / **`jspdf.es.min.js`**; **`jspdf.min.js`** remains the script loaded by admin PDF export.
 
 ## Domain audit — Stage A1–A12 (template snapshot, 2026-03-23)
 

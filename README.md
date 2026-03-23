@@ -126,7 +126,7 @@ git remote add origin https://github.com/<you>/<repo>.git
 git push -u origin main
 ```
 
-**Vercel:** import the repo and keep the production branch on **`main`**; configuration lives in `vercel.json` at the project root. If the dashboard **build** step feels too heavy (lint + test + webpack), you can relax it there.
+**Vercel:** import the repo and keep the production branch on **`main`**; configuration lives in `vercel.json` at the project root. If the dashboard **build** step feels too heavy (lint + test + webpack), you can relax it there. The SPA **rewrite** sends unknown paths to `index.html`; existing files (`/src/**`, `/data/**`, `/public/**`, `dist/**` after build) are still served first. **`/admin`** is a normal client route — do not add a host-level redirect from `/admin` to `/admin-login` or the dashboard will never load.
 
 **GitHub Actions:** on push or pull request to **`main`**, `.github/workflows/ci.yml` runs **`npm ci`**, **lint**, **tests**, and **webpack build** (same idea as the Vercel build command).
 
