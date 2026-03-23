@@ -41,8 +41,6 @@ import { catalog as catalogPromise } from './data/products.js';
 import { HomeView } from './views/home/HomeView.js';
 import { ProductView } from './views/product/ProductView.js';
 import { CollectionView } from './views/collection/CollectionView.js';
-import { AdminView } from './views/admin/AdminView.js';
-import { LoginView } from './views/login/LoginView.js';
 import { WishlistView } from './views/wishlist/WishlistView.js';
 import { Router } from './router/Router.js';
 import { AuthService } from './services/AuthService.js';
@@ -548,13 +546,16 @@ const routes = {
     updateNavbar();
     updateMobileNav();
 
+    const { AdminView } = await import(
+      /* webpackChunkName: "admin" */ './views/admin/AdminView.js'
+    );
     const adminView = new AdminView(services);
     const content = await adminView.render();
     main.innerHTML = '';
     main.appendChild(content);
   },
 
-  adminLogin: () => {
+  adminLogin: async () => {
     // If already authenticated and not forcing login, redirect to admin
     const urlParams = new URLSearchParams(window.location.search);
     const forceLogin = urlParams.get('force') === 'true';
@@ -572,6 +573,9 @@ const routes = {
     updateNavbar();
     updateMobileNav();
 
+    const { LoginView } = await import(
+      /* webpackChunkName: "admin" */ './views/login/LoginView.js'
+    );
     const loginView = new LoginView(services);
     const content = loginView.render();
     main.innerHTML = '';

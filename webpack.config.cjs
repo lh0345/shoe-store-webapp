@@ -10,6 +10,7 @@ module.exports = (env, argv) => {
     entry: './src/app.js',
     output: {
       filename: 'bundle.js',
+      chunkFilename: '[name].[contenthash:8].js',
       path: path.resolve(__dirname, 'dist'),
       clean: true,
     },

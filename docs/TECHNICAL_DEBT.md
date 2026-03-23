@@ -37,9 +37,15 @@ Addressed findings from **A1 / A4 / A5 / A9** slices (see `.governance/STAGE_ASS
 ## Remediation — 2026-03-24 (Router tests, dependency hygiene)
 
 - **npm audit:** Ran **`npm audit fix`** (non-breaking); count of reported issues dropped. Remaining findings are largely **`vercel`** CLI transitive packages (fix would be a major bump — review before `npm audit fix --force`).
-- **jspdf:** Dependency raised to **`^4.2.1`** for the npm advisory chain. Admin PDF still loads **`/public/libs/jspdf.min.js`** in the browser; refresh that vendor copy from the same major line when you next touch PDF export.
+- **jspdf:** Dependency raised to **`^4.2.1`** for the npm advisory chain; **`public/libs/jspdf.min.js`** was later refreshed from the package UMD build (see remediation **2026-03-24 (Vercel CLI, jsPDF vendor, admin code-splitting)**).
 - **A3 / `Router`:** Constructor accepts optional **`{ autoInit: false }`** so Jest can call **`handleRoute()`** without registering global listeners. **`tests/Router.test.js`** covers home, collection, wishlist, admin routes, **`/product`** without slug → **`notFound`**, slug routing, and unknown paths.
 - **A12:** **`jest.config.js`** `collectCoverageFrom` now includes **`src/router/**/*.js`**.
+
+## Remediation — 2026-03-24 (Vercel CLI, jsPDF vendor, admin code-splitting)
+
+- **`vercel` (devDependency):** Upgraded to **v50** to track current CLI releases. **`npm audit`** may still report issues inside the CLI’s transitive graph; treat **`vercel` as a dev tool**, not the production browser bundle — revisit with **`npm audit fix`** / upstream releases periodically (avoid blind **`--force`**).
+- **jspdf / `public/libs`:** Replaced **`public/libs/jspdf.min.js`** with **`jspdf.umd.min.js`** from **`jspdf@^4.2.1`** (`node_modules`) so the script the admin PDF loader fetches matches the npm major line.
+- **A11 / Webpack:** **`AdminView`** and **`LoginView`** are loaded with **`import()`** and chunk name **`admin`**; production build outputs **`bundle.js`** (~239 KiB min) plus **`admin.[hash].js`** (~102 KiB). **`webpack.config.cjs`** sets **`output.chunkFilename`** for hashed async chunks. Deploy **`dist/`** in full when using the bundle entry.
 
 ## Domain audit — Stage A1–A12 (template snapshot, 2026-03-23)
 
@@ -107,8 +113,8 @@ Governance checklist: `.governance/subplans/domain_linkage_audit.md`. Re-run aft
 
 ### A11 — Webpack, Vercel, static vs dev server
 
-- **Observation:** `webpack.config.cjs` respects `mode`; production build minifies `dist/bundle.js`; `index.html` still uses ES modules by default. **GitHub Actions** (`.github/workflows/ci.yml`) runs lint, test, and build on push/PR to **`main`**.
-- **Risk:** Operators may deploy without switching entry or may expect server APIs on Vercel — behavior must match `ARCHITECTURE.md`.
+- **Observation:** `webpack.config.cjs` respects `mode`; production build emits **`dist/bundle.js`** plus lazy **`admin.[hash].js`** (admin/login views); `index.html` still uses ES modules by default. **GitHub Actions** (`.github/workflows/ci.yml`) runs lint, test, and build on push/PR to **`main`**.
+- **Risk:** Operators may deploy without switching entry or may expect server APIs on Vercel — behavior must match `ARCHITECTURE.md`. Bundle deploys must upload **all** `dist/` assets so async chunks resolve.
 - **Bug-suspected:** None; strict `buildCommand` on Vercel may slow iteration — relax in dashboard if needed.
 
 ### A12 — Jest, ESLint, Husky

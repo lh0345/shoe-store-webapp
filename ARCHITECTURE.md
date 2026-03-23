@@ -48,7 +48,7 @@ This template is **Email / WhatsApp contact–oriented**; there is no payment st
 | Approach | When to use |
 |----------|-------------|
 | **Current default:** `<script src="/src/app.js" type="module">`** | Simple debugging, no build step for local/static serving, many HTTP requests for modules. |
-| **Optional:** **`webpack.config.cjs` → `dist/bundle.js`** | Fewer round-trips on slow networks; switch **`index.html`** to load the bundle **instead of** `src/app.js` and verify paths to `/data/`, `/public/`, etc. |
+| **Optional:** **`webpack.config.cjs` → `dist/bundle.js`** | Fewer round-trips on slow networks; switch **`index.html`** to load the bundle **instead of** `src/app.js` and verify paths to `/data/`, `/public/`, etc. Production build also emits a lazy **`admin.*.js`** chunk (admin + login views); deploy the whole **`dist/`** directory so that file is served next to **`bundle.js`**. |
 
 Only one entry path should be active in **`index.html`** for a given deployment.
 
@@ -70,4 +70,4 @@ Only one entry path should be active in **`index.html`** for a given deployment.
 ## Quality and deploy notes
 
 - **ESLint / Prettier / Jest** — see `package.json` scripts. CI or Vercel **`buildCommand`** may run lint + test + build; relax in the dashboard if deploy time is an issue for a static demo.
-- **Further optimization** (code-splitting, lazy-loading admin) is optional and not required for the template goal.
+- **Webpack:** admin and login routes are **lazy-loaded** in the bundle build to keep the main chunk smaller; the dev ES-module path still loads everything on demand via separate requests.
