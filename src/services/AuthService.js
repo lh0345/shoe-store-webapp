@@ -43,6 +43,10 @@ import { supabase } from '../config/supabase.js';
 /* eslint-env browser, node */
 
 export class AuthService {
+  /**
+   * Template auth: session + users in localStorage only. Not a substitute for server-side
+   * sessions, CSRF protection, or rate limits at the edge — see docs/DEPLOY.md.
+   */
   constructor(brandSlug = 'store') {
     this.currentUser = null;
     this.storageKey = `${brandSlug}_admin_session`;
@@ -120,19 +124,11 @@ export class AuthService {
       return process.env[key];
     }
     /* eslint-enable no-undef */
-    if (typeof globalThis !== 'undefined' && globalThis.import?.meta?.env?.[key]) {
-      return globalThis.import.meta.env[key];
-    }
-    // Check global config loaded from server
+    // Check global config loaded from server / static config.js
     if (typeof window !== 'undefined' && window.ENV_CONFIG?.[key]) {
       return window.ENV_CONFIG[key];
     }
-    // Fallback for browser environment
-    try {
-      return import.meta.env?.[key];
-    } catch {
-      return undefined;
-    }
+    return undefined;
   }
 
   startSessionMonitoring() {

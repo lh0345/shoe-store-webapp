@@ -199,6 +199,10 @@
   <!-- Load environment config -->
   <script src="/config.js"></script>
 
+  <!-- App entry (pick one deployment strategy — see docs/DEPLOY.md):
+       • Default: ES modules from /src (good for local dev with python server).
+       • Production bundle: use root index with <script src="/dist/bundle.js" defer></script>
+         or serve dist/index.html from npm run build (includes that script automatically). -->
   <script src="/src/app.js?v=1" type="module"></script>
 </body>
 </html>

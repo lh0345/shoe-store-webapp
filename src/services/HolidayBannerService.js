@@ -1,5 +1,25 @@
 /* HolidayBannerService.js - Macedonia holiday sales banners with countdown */
 
+/** YYYY-MM-DD interpreted as local calendar day start (avoids UTC-only parsing quirks). */
+function parseLocalDayStart(ymd) {
+  const parts = String(ymd).split('-').map(Number);
+  if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) {
+    return new Date(NaN);
+  }
+  const [y, m, d] = parts;
+  return new Date(y, m - 1, d, 0, 0, 0, 0);
+}
+
+/** Inclusive end of local calendar day for YYYY-MM-DD. */
+function parseLocalDayEnd(ymd) {
+  const parts = String(ymd).split('-').map(Number);
+  if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) {
+    return new Date(NaN);
+  }
+  const [y, m, d] = parts;
+  return new Date(y, m - 1, d, 23, 59, 59, 999);
+}
+
 export class HolidayBannerService {
   constructor(brandSlug) {
     this.storageKey = `${brandSlug}_holiday_banners`;
@@ -153,9 +173,9 @@ export class HolidayBannerService {
         return banner;
       }
 
-      // Check date range
-      const startDate = new Date(banner.startDate);
-      const endDate = new Date(banner.endDate + 'T23:59:59');
+      // Check date range (local calendar days, inclusive)
+      const startDate = parseLocalDayStart(banner.startDate);
+      const endDate = parseLocalDayEnd(banner.endDate);
 
       if (now >= startDate && now <= endDate) {
         return banner;
@@ -179,7 +199,7 @@ export class HolidayBannerService {
 
   getCountdown(endDate) {
     const now = new Date();
-    const end = new Date(endDate + 'T23:59:59');
+    const end = parseLocalDayEnd(endDate);
     const diff = end - now;
 
     if (diff <= 0) return null;

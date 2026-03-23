@@ -48,7 +48,7 @@ This template is **Email / WhatsApp contact–oriented**; there is no payment st
 | Approach | When to use |
 |----------|-------------|
 | **Current default:** `<script src="/src/app.js" type="module">`** | Simple debugging, no build step for local/static serving, many HTTP requests for modules. |
-| **Optional:** **`webpack.config.cjs` → `dist/bundle.js`** | Fewer round-trips on slow networks; switch **`index.html`** to load the bundle **instead of** `src/app.js` and verify paths to `/data/`, `/public/`, etc. Production build also emits a lazy **`admin.*.js`** chunk (admin + login views); deploy the whole **`dist/`** directory so that file is served next to **`bundle.js`**. |
+| **Optional:** **`webpack.config.cjs` → `dist/bundle.js`** | Run **`npm run build`**: writes **`dist/bundle.js`**, hashed **`admin.*.js`**, and **`dist/index.html`** (shell that loads **`/dist/bundle.js`**). **`publicPath`** is **`/dist/`** so chunks resolve from the site root. You can keep root **`index.html`** on **`/src/app.js`** for dev and use **`dist/index.html`** or a one-line script swap for production — see **`docs/DEPLOY.md`**. |
 
 Only one entry path should be active in **`index.html`** for a given deployment.
 

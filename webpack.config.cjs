@@ -13,6 +13,9 @@ module.exports = (env, argv) => {
       chunkFilename: '[name].[contenthash:8].js',
       path: path.resolve(__dirname, 'dist'),
       clean: true,
+      // Required so lazy-loaded chunks (e.g. admin.*.js) fetch from /dist/ when the
+      // shell is served from site root with script src="/dist/bundle.js".
+      publicPath: isProd ? '/dist/' : 'auto',
     },
     module: {
       rules: [

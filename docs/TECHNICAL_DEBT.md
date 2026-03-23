@@ -1,5 +1,15 @@
 # Technical debt & domain audits
 
+## Remediation — 2026-03-24 (docs, bundle index, holidays, tests)
+
+- **Deploy / entry:** Added [`docs/DEPLOY.md`](./DEPLOY.md) (git remote, Vercel redeploy, ES modules vs bundle, audit, Supabase, admin auth, banners, social). **`npm run build`** runs **`scripts/write-dist-index.mjs`** to emit **`dist/index.html`** loading **`/dist/bundle.js`**. Webpack **`output.publicPath`** is **`/dist/`** in production for async chunks.
+- **README:** Rewritten for **client template** voice; links **`DEPLOY.md`**, **`ARCHITECTURE.md`**, **`TECHNICAL_DEBT.md`**.
+- **Holiday (A8):** `HolidayBannerService` uses **local calendar** start/end for `YYYY-MM-DD` (inclusive end-of-day) instead of UTC-only `Date` parsing.
+- **Social:** Footer WhatsApp icon uses **`social.whatsapp`** or falls back to **`contact.phone`** digits (`Application.initFooterSocialLinks`).
+- **Auth / Product env:** Removed **`import.meta.env`** from **`AuthService.getEnvVar`** and **`ProductService.getEnvVar`** (Jest-safe; use **`process.env`** / **`window.ENV_CONFIG`**).
+- **Tests:** **`tests/HolidayBannerService.test.js`**, **`tests/AuthService.test.js`**; **`jest.config.js`** **`setupFilesAfterEnv`** → **`tests/setup.js`** (Node **`webcrypto`**, **TextEncoder**).
+- **Governance:** **`MASTER_GOVERNANCE.md`** references **`docs/DEPLOY.md`**.
+
 ## Remediation — 2026-03-23 (governance-driven fixes)
 
 Addressed findings from **A1 / A4 / A5 / A9** slices (see `.governance/STAGE_ASSIGNER.md`):

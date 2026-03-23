@@ -1,11 +1,11 @@
 {
   "name": "shoe-store-template",
   "version": "1.0.0",
-  "description": "Production-ready e-commerce store template - Deploy in 3 hours",
+  "description": "Vanilla JS shoe storefront template (contact/order by WhatsApp or email, no in-app payments)",
   "type": "module",
   "main": "app.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode production && node scripts/write-dist-index.mjs",
     "build:dev": "webpack --mode development",
     "dev": "python3 server.py",
     "start": "python3 server.py",

@@ -35,7 +35,11 @@ export class Application {
     const socialContainer = document.getElementById('footer-social');
     if (!socialContainer) return;
 
-    const social = this.config.social || {};
+    const social = { ...(this.config.social || {}) };
+    // Footer WhatsApp: use social.whatsapp if set; else digits from contact.phone (same as header WA intent).
+    if (!social.whatsapp && this.config.contact?.phone) {
+      social.whatsapp = this.config.contact.phone.replace(/\D/g, '');
+    }
     socialContainer.innerHTML = '';
 
     // Use factory to create social links

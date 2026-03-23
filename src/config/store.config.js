@@ -47,11 +47,11 @@ export const storeConfig = {
 
   // ===== CONTACT INFORMATION =====
   contact: {
-    phone: '+38970000000', // WhatsApp number for orders
+    phone: '+38970000000', // Shown for tel: / WhatsApp; use country code
     email: 'info@urbanstep.com',
     address: 'Skopje, North Macedonia',
 
-    // Social media (leave empty to hide)
+    // Legacy block — footer social icons use `social` below; keep in sync when editing admin UI.
     social: {
       facebook: '',
       instagram: '',
@@ -96,11 +96,12 @@ export const storeConfig = {
     warranty: '1-year warranty on all products',
   },
 
-  // ===== SOCIAL MEDIA LINKS =====
+  // ===== SOCIAL (footer icons + sharing) — set before fork / client handoff =====
   social: {
-    whatsapp: '', // Phone number with country code (e.g., '38970123456')
-    instagram: '', // Username only (e.g., 'yourshop')
-    facebook: '', // Page name or full URL (e.g., 'yourshop')
+    // Digits only, country code without + (e.g. 38970123456). If empty, app uses contact.phone digits for WhatsApp.
+    whatsapp: '',
+    instagram: '', // Username only
+    facebook: '', // Username or full https:// URL
   },
 
   // ===== ADMIN CREDENTIALS (CHANGE IMMEDIATELY) =====

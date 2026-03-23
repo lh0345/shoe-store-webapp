@@ -1,175 +1,104 @@
-# Shoe Store Webapp
+# Shoe Store Webapp (client template)
 
-A basic vanilla JavaScript e-commerce webapp for displaying shoes. **This is NOT a commercial SaaS product.** It's a learning project/demo with limited functionality.
+A **vanilla JavaScript** storefront you can fork for **email / WhatsApp contact** workflows — **no in-app payment stack**. Data defaults to **`data/products.json`** with **localStorage** for admin overrides; see **[`ARCHITECTURE.md`](./ARCHITECTURE.md)** for the full data flow.
 
-**How data, routing, and deploy paths fit together:** see [`ARCHITECTURE.md`](./ARCHITECTURE.md) at the repo root. Ongoing audit notes and remediation history: [`docs/TECHNICAL_DEBT.md`](./docs/TECHNICAL_DEBT.md).
-
----
-
-## ⚠️ Reality Check
-
-**This is NOT:**
-- A production-ready SaaS template
-- Something you can deploy in 3 hours
-- A €500 commercial product
-- A business you can sell to clients
-- A template for creating multiple stores
-
-**This IS:**
-- A basic shoe store demo
-- A learning project in vanilla JS
-- A portfolio piece
-- Something that works locally
-- Code you can learn from
+**Deploy, bundle entry, audit, Supabase, and auth expectations:** [`docs/DEPLOY.md`](./docs/DEPLOY.md) · **Audit history:** [`docs/TECHNICAL_DEBT.md`](./docs/TECHNICAL_DEBT.md)
 
 ---
 
-## 🚀 What Actually Works
+## What this template is
 
-### Basic Features
-- ✅ Display shoe products from local data
-- ✅ Product filtering (basic)
-- ✅ Wishlist (localStorage only)
-- ✅ Currency toggle (MKD/EUR)
-- ✅ Social sharing buttons
-- ✅ Mobile-responsive design
-- ✅ Product search (basic)
+- A **static-first SPA** (HTML shell + ES modules or optional Webpack bundle)
+- **Configurable** branding, contact, and social placeholders via `src/config/store.config.js`
+- **Admin UI** for demos — **browser-only auth**; not a substitute for server-side security
+- **Optional** Python dev server for local `/api` parity; production is usually **static hosting** (e.g. Vercel)
 
-### Admin Features (Limited)
-- ✅ Basic admin login
-- ✅ Add/edit/delete products (in memory only)
-- ❌ No real database persistence
-- ❌ No image upload
-- ❌ No analytics
-
-### Security Improvements
-- ✅ Server-side API proxy (no client-side database keys)
-- ✅ Input validation and sanitization
-- ✅ Secure wishlist persistence
-- ✅ Error handling with user feedback
-- ✅ Optimistic UI updates with rollback on failure
-
-### Technical Stuff
-- ✅ Vanilla JavaScript (ES6 modules)
-- ✅ Python development server with API endpoints
-- ✅ Jest tests (comprehensive)
-- ✅ Modular CSS architecture
-- ✅ Event-driven architecture for UI updates
-- ✅ Optional Webpack bundle (`dist/bundle.js`); `index.html` defaults to ES module entry (`/src/app.js`)
-- ❌ No real backend
-- ❌ No deployment automation
+This is **not** a hosted SaaS product, multi-tenant platform, or turnkey payment solution out of the box.
 
 ---
 
-## 🛠️ Tech Stack (Reality)
+## Features
 
-- **Frontend:** Vanilla JavaScript SPA
-- **Styling:** Plain CSS (modular files)
-- **Data:** Local JSON file (no database)
-- **Server:** Python HTTP server (development only)
-- **Testing:** Jest with jsdom
-- **Persistence:** localStorage only
+### Storefront
+- Product catalog from JSON, filters, product detail, wishlist (**localStorage**)
+- Currency toggle (**MKD / EUR**) with validation
+- Mobile-responsive layout, modular CSS under `public/css/`
+
+### Admin (template scope)
+- Login, product CRUD, settings — persisted per browser via **localStorage** / dev APIs where wired
+- **Change default admin password** before any real use (`store.config.js` / admin)
+
+### Quality
+- **ESLint**, **Prettier**, **Jest** (jsdom), **Husky** pre-commit, **GitHub Actions** CI on `main`
 
 ---
 
-## 📂 Actual Project Structure
+## Tech stack
+
+| Area | Choice |
+|------|--------|
+| UI | HTML + CSS (`public/css/`) |
+| App | ES modules under `src/`, entry `src/app.js` |
+| Routing | `src/router/Router.js` |
+| Data | `data/products.json`, `localStorage`, optional dev `POST /api/*` |
+| Build (optional) | Webpack → `dist/bundle.js` + lazy `admin.*.js`; **`npm run build`** also writes **`dist/index.html`** |
+| Deploy | Static host; `vercel.json` at repo root |
+
+---
+
+## Project layout
 
 ```
 shoe-store-template/
-├── index.html                 # SPA shell (loads src/app.js as ES module)
-├── config.js                  # Static ENV_CONFIG for hosts without Python /config
-├── data/
-│   └── products.json          # Default catalog (fetched at runtime)
-├── public/css/                # Modular stylesheets
-├── src/
-│   ├── app.js                 # Entry: services, router, views
-│   ├── config/                # store.config.js, supabase.js (client disabled)
-│   ├── data/products.js       # Loads JSON → Catalog / Shoe
-│   ├── models/                # Shoe, Catalog, User
-│   ├── router/Router.js
-│   ├── services/              # Product, auth, wishlist, currency, DataService, …
-│   ├── utils/                 # navbar, viewSwitcher, helpers, …
-│   └── views/
-│       ├── home/, collection/, product/, wishlist/, login/
-│       └── admin/               # AdminView + admin products/settings/PDF/…
-├── tests/                     # Jest (jsdom)
-├── server.py                  # Python dev server + optional /api routes
-├── webpack.config.cjs         # Optional dist/bundle.js
+├── index.html                 # Default shell: loads /src/app.js (ES modules)
+├── config.js                  # Static ENV_CONFIG when Python /config is absent
+├── data/products.json
+├── public/css/ , public/libs/
+├── src/                       # app.js, config/, views/, services/, …
+├── dist/                      # produced by npm run build (gitignored)
+├── server.py                  # Dev server + optional APIs
+├── webpack.config.cjs
 ├── vercel.json
 ├── ARCHITECTURE.md
+├── docs/DEPLOY.md
 └── docs/TECHNICAL_DEBT.md
 ```
 
 ---
 
-## 🚀 How to Actually Run This
+## Run locally
 
 ```bash
-# Install dependencies
 npm install
-
-# Start dev server
-npm run dev
-
-# Run tests
+npm run dev          # Python server — see package.json
 npm test
+npm run lint
+npm run build        # Webpack + dist/index.html (bundle entry)
 ```
 
-That's it. No fancy deployment scripts, no automated setup, no SaaS magic.
+---
 
-### Git and hosting
+## Git and hosting
 
-The repository uses the **`main`** branch. To publish to GitHub (or another host), add a remote and push:
+The default branch is **`main`**.
 
 ```bash
 git remote add origin https://github.com/<you>/<repo>.git
 git push -u origin main
 ```
 
-**Vercel:** import the repo and keep the production branch on **`main`**; configuration lives in `vercel.json` at the project root. If the dashboard **build** step feels too heavy (lint + test + webpack), you can relax it there. The SPA **rewrite** sends unknown paths to `index.html`; existing files (`/src/**`, `/data/**`, `/public/**`, `dist/**` after build) are still served first. **`/admin`** is a normal client route — do not add a host-level redirect from `/admin` to `/admin-login` or the dashboard will never load.
+**Vercel:** use `vercel.json`; production branch **`main`**. After changing redirects or headers, **redeploy** so the dashboard applies them. Do **not** add a host redirect from **`/admin`** to **`/admin-login`** — the SPA owns **`/admin`**.
 
-**GitHub Actions:** on push or pull request to **`main`**, `.github/workflows/ci.yml` runs **`npm ci`**, **lint**, **tests**, and **webpack build** (same idea as the Vercel build command).
+**GitHub Actions:** `.github/workflows/ci.yml` runs **`npm ci`**, lint, tests, and build on push/PR to **`main`**.
 
-**Husky:** after `npm install`, pre-commit runs **lint** then **tests**. Commits fail if either step fails.
+**Husky:** after `npm install`, pre-commit runs **lint** then **tests**.
 
 ---
 
-## What's Missing (Major Gaps)
+## Known limits (by design)
 
-### No Real Backend
-- Products stored in local JSON file
-- No database integration
-- No user accounts for admin
+- **No** server-rendered checkout or payment provider integration in-app
+- **No** shared database in the default template — forks add their own backend if needed
+- **`npm audit`** on **dev** tools (e.g. Vercel CLI) ≠ runtime CVEs for your static files — triage carefully
 
-### Deployment (template scope)
-- Static hosting (e.g. Vercel) is configured; no app server in production by default
-- Optional Webpack build; Python APIs are dev-oriented
-- No automated multi-environment pipeline out of the box
-
-### No Business Features
-- No inventory management
-- No analytics for product viewed most.
-
-### Security Issues
-- No real authentication
-- No CSRF protection (despite having the code)
-- No input validation only on customer part.
-- No HTTPS enforcement
-
-
-## 🎯 What This Actually Is
-
-This is a **learning project** that demonstrates:
-- Vanilla JavaScript architecture
-- Modular CSS organization
-- Basic SPA routing
-- Service layer pattern
-- localStorage usage
-- Event-driven UI updates
-
-
-## 📞 Contact
-
-**Built as a coding exercise, not a business venture.**
-
-*Reality: It's just a shoe store demo. 🚀*
+For detail on bundle vs `/src`, placeholders, and security posture, use **`docs/DEPLOY.md`**.

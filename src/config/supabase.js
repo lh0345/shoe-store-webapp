@@ -15,6 +15,8 @@
  * - GET /api/products - Get products
  * - POST /api/wishlist - Update wishlist
  * - POST /api/orders - Create orders
+ *
+ * Template default: no browser DB. Re-enabling a client is a deliberate fork — see docs/DEPLOY.md.
  */
 
 // Export null to prevent accidental usage

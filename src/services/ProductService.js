@@ -136,16 +136,15 @@ export class ProductService {
   }
 
   getEnvVar(key) {
-    // Check global config loaded from server
+    /* eslint-disable no-undef */
+    if (typeof process !== 'undefined' && process.env?.[key]) {
+      return process.env[key];
+    }
+    /* eslint-enable no-undef */
     if (typeof window !== 'undefined' && window.ENV_CONFIG?.[key]) {
       return window.ENV_CONFIG[key];
     }
-    // Fallback for browser environment
-    try {
-      return import.meta.env?.[key];
-    } catch {
-      return undefined;
-    }
+    return undefined;
   }
 
   // CREATE

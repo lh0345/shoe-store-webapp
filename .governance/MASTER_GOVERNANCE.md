@@ -5,6 +5,7 @@ This file is the **stable rule anchor** for stage execution. Do not edit it to e
 ## Authoritative references
 
 - **Project reality and limits:** repository root `README.md`
+- **Deploy and entry modes:** `docs/DEPLOY.md` (ES modules vs Webpack bundle, git/Vercel, audit posture)
 - **Intended layering and data flow:** repository root `ARCHITECTURE.md` (JSON → catalog → views; admin/`localStorage`; optional bundle vs `/src`). Follow the invariants below and **flag drift** in audits.
 
 ## Stack (this repository)
