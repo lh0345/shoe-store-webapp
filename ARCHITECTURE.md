@@ -64,7 +64,7 @@ Only one entry path should be active in **`index.html`** for a given deployment.
 
 ## Optional Python dev server
 
-- **`scripts/server.py`** (and optional **`scripts/server_secure.py`**) can expose **`/api/*`** for wishlist or admin sync during development. **Static production hosts** (e.g. Vercel) typically **do not** run this Python server; behavior falls back to **`fetch('/data/products.json')`** and **`localStorage`** as implemented in **`DataService`**.
+- **`scripts/static-dev-server.mjs`** (default **`npm run dev`**) serves **`GET /api/products`** and **`/config.js`** from **`.env.local`**. **`scripts/server.py`** (**`npm run dev:python`**) adds **`POST /api/*`** for wishlist or admin file sync during development; optional **`scripts/server_secure.py`** for Supabase proxying. **Static production hosts** (e.g. Vercel) typically **do not** run these; behavior falls back to **`fetch('/data/products.json')`** and **`localStorage`** as implemented in **`DataService`**.
 
 ---
 

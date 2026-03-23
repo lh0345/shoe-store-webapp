@@ -7,8 +7,9 @@
   "scripts": {
     "build": "webpack --mode production && node scripts/write-dist-index.mjs",
     "build:dev": "webpack --mode development",
-    "dev": "python3 scripts/server.py",
-    "start": "python3 scripts/server.py",
+    "dev": "node scripts/static-dev-server.mjs",
+    "start": "node scripts/static-dev-server.mjs",
+    "dev:python": "python3 scripts/server.py",
     "dev:secure": "python3 scripts/server_secure.py",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -17,7 +18,7 @@
     "lint:fix": "eslint src/ tests/ --fix",
     "format": "prettier --write src/ tests/ *.js *.json",
     "sync": "node scripts/sync-to-supabase.js",
-    "deploy": "vercel --prod",
+    "deploy": "npx vercel@latest --prod",
     "prepare": "husky"
   },
   "keywords": [
@@ -49,7 +50,6 @@
     "jest-environment-jsdom": "^30.2.0",
     "jsdom": "^27.3.0",
     "prettier": "^3.7.4",
-    "vercel": "^50.35.0",
     "webpack": "^5.103.0",
     "webpack-cli": "^6.0.1"
   },

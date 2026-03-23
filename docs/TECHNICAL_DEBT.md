@@ -6,6 +6,16 @@
 - **Moved** `server.py` → **`scripts/server.py`**, `server_secure.py` → **`scripts/server_secure.py`** (both `chdir` to repo root); **`sql/setup.sql`** → **`scripts/sql/setup.sql`**; **`products-template.csv`** → **`data/products-template.csv`**.
 - **`package.json`:** `dev` / `start` use the new paths; added **`dev:secure`** for the optional secure server.
 
+## Remediation — 2026-03-23 (dev server: Node default)
+
+- **`npm run dev`** / **`npm start`** now use **`scripts/static-dev-server.mjs`** (Node) so local ES modules load without Python on Windows. **`GET /config.js`**, **`GET /api/products`**, **`POST /api/wishlist`**, **`POST /api/products`** (admin), and **`OPTIONS`** for **`/api/*`** mirror **`scripts/server.py`**. Use **`npm run dev:python`** only if you prefer the Python stack.
+
+## Remediation — 2026-03-23 (npm audit)
+
+- **Removed** **`vercel`** from **`devDependencies`** — the CLI’s dependency graph accounted for **27** reported issues (not part of the shipped static bundle). **`npm run deploy`** uses **`npx vercel@latest --prod`** instead.
+- **`npm audit fix`** cleared the remaining **`ajv`** moderate advisory after the lockfile changed.
+- **`npm audit`:** **0** vulnerabilities (re-run after major upgrades).
+
 ## Remediation — 2026-03-24 (Europe/Skopje holiday banners, INTEGRATIONS.md, Luxon)
 
 - **`HolidayBannerService`:** **`Europe/Skopje`** (IANA) for all `YYYY-MM-DD` ranges and countdown end-of-day, via **Luxon** (`HOLIDAY_BANNER_TIME_ZONE`). Default banner years follow **Skopje** “today”. **Webpack bundle** grows (~+70 KiB min) — acceptable for correct TZ semantics; lazy-loading the service would be a future optimization.
@@ -44,7 +54,7 @@ Addressed findings from **A1 / A4 / A5 / A9** slices (see `.governance/STAGE_ASS
 - **A1 / static deploy:** Added root `config.js` so `window.ENV_CONFIG` exists when Python’s dynamic `/config.js` is not used (e.g. Vercel).
 - **A4:** Removed duplicate `loadSessionSync()` call in `AuthService` constructor.
 - **A5:** `ProductService` no longer runs pointless `initSupabase()` when the Supabase client export is intentionally `null`.
-- **A9:** `DataService.readJSON('products')` now falls back to `fetch('/data/products.json')` after API failure; `scripts/server.py` implements **GET `/api/products`** so local dev matches `readFromSecureAPI` expectations.
+- **A9:** `DataService.readJSON('products')` now falls back to `fetch('/data/products.json')` after API failure; **`scripts/static-dev-server.mjs`** and **`scripts/server.py`** implement **GET `/api/products`** so local dev matches `readFromSecureAPI` expectations.
 - **Lint / A2:** `src/app.js` — `const router = new Router(routes)` after routes (handlers only touch `router` when invoked); Prettier fix on the error fallback HTML string.
 
 ## Remediation — 2026-03-23 (continued: A6 / A10 / lint hygiene)

@@ -179,9 +179,9 @@ export class Application {
 
     // Hide loading screen
     console.log('Hiding loading screen');
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       this.loadingScreen.classList.add('hidden');
       console.log('Loading screen hidden');
-    }, 400);
+    });
   }
 }

@@ -11,7 +11,7 @@ A **vanilla JavaScript** storefront you can fork for **email / WhatsApp contact*
 - A **static-first SPA** (HTML shell + ES modules or optional Webpack bundle)
 - **Configurable** branding, contact, and social placeholders via `src/config/store.config.js`
 - **Admin UI** for demos — **browser-only auth**; not a substitute for server-side security
-- **Optional** Python dev server for local `/api` parity; production is usually **static hosting** (e.g. Vercel)
+- **Optional** local dev servers (Node by default, Python for full **`POST /api`**) for `/api` parity; production is usually **static hosting** (e.g. Vercel)
 
 This is **not** a hosted SaaS product, multi-tenant platform, or turnkey payment solution out of the box.
 
@@ -54,9 +54,10 @@ shoe-store-template/
 ├── config.js                  # Static ENV_CONFIG when Python /config is absent
 ├── data/                      # products.json, wishlist_*.json, products-template.csv
 ├── public/css/ , public/libs/
-├── scripts/                   # dev server (Python), spa-redirect, sync, dist index helper
-│   ├── server.py              # Local dev + GET/POST /api/* parity
-│   ├── server_secure.py       # Optional Supabase-aware dev server
+├── scripts/                   # dev servers, spa-redirect, sync, dist index helper
+│   ├── static-dev-server.mjs  # Default `npm run dev` (Node; GET /config.js, /api/products, SPA)
+│   ├── server.py              # `npm run dev:python` — full GET/POST /api/* parity
+│   ├── server_secure.py       # Optional Supabase-aware dev server (`npm run dev:secure`)
 │   └── sql/setup.sql          # Supabase schema (run in SQL editor)
 ├── src/                       # app.js, config/, views/, services/, …
 ├── dist/                      # produced by npm run build (gitignored)
@@ -77,12 +78,19 @@ shoe-store-template/
 ```bash
 npm install
 # Optional: copy .env.template → .env.local for local env (gitignored; never commit secrets)
-npm run dev          # Python server — see package.json
+npm run dev          # Node static server (default; no Python required)
 npm test
 npm run lint
 npm run build        # Webpack + dist/index.html (bundle entry)
 npm run check        # test + lint + build (pre-push gate)
 ```
+
+**`net::ERR_CONNECTION_REFUSED` on `/src/...` modules:** the app must be opened over **HTTP** with a server running — e.g. **`npm run dev`** then **http://localhost:8000/** (if **8000** is busy, the dev server tries **8001**, **8002**, … and prints the URL). Do not open `index.html` as a `file://` URL. If you need Python **`POST /api/*`** (admin file sync), use **`npm run dev:python`** instead (requires `python3` on your PATH; on Windows you can use **`py -3 scripts/server.py`**).
+
+**`EADDRINUSE` / port already in use:** stop the other process on that port, or run with a fixed port: **`set PORT=8001 && npm run dev`** (cmd) / **`$env:PORT=8001; npm run dev`** (PowerShell).
+
+**Wishlist / `POST /api`:** the Node dev server implements **`POST /api/wishlist`** and **`POST /api/products`** (same API key rules as Python). If you see **401**, align **`API_KEY`** in **`.env.local`** with what the client sends (default **`demo-key-123`**).
+
 
 ---
 
@@ -107,6 +115,6 @@ git push -u origin main
 
 - **No** server-rendered checkout or payment provider integration in-app
 - **No** shared database in the default template — forks add their own backend if needed
-- **`npm audit`** on **dev** tools (e.g. Vercel CLI) ≠ runtime CVEs for your static files — triage carefully
+- **`npm audit`** on **dev** tools (bundler, test runner) ≠ runtime CVEs for your static files — triage carefully; **`npm run deploy`** uses **`npx vercel@latest`** so the Vercel CLI is not pinned in `package.json`
 
 For detail on bundle vs `/src`, placeholders, and security posture, use **`docs/DEPLOY.md`**.

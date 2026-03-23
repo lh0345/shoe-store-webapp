@@ -59,6 +59,15 @@
   
   <!-- GitHub Pages SPA redirect handler -->
   <script src="/scripts/spa-redirect.js"></script>
+
+  <!-- Bare "luxon" only works in bundlers; native ES modules need this map (see public/libs/luxon.mjs). -->
+  <script type="importmap">
+  {
+    "imports": {
+      "luxon": "/public/libs/luxon.mjs"
+    }
+  }
+  </script>
 </head>
 <body>
   <!-- Page Transition Progress Bar -->

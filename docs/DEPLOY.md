@@ -16,8 +16,10 @@ After changing `vercel.json` (e.g. admin redirect fix), trigger a **new producti
 
 | Mode | When to use |
 |------|-------------|
-| **ES modules** (default root `index.html`) | Local dev with `python3 scripts/server.py`, quick edits, many module requests. |
+| **ES modules** (default root `index.html`) | Local dev with **`npm run dev`** (`scripts/static-dev-server.mjs`) or **`npm run dev:python`**; quick edits, many module requests. |
 | **Webpack bundle** | Production-style: smaller initial parse path, lazy **admin** chunk under `/dist/`. |
+
+**Luxon (holiday banners):** native ES modules cannot resolve npm package names like `luxon` without a bundler. Root `index.html` includes an **import map** pointing **`luxon`** → **`/public/libs/luxon.mjs`** (copied from `node_modules/luxon/build/es6/luxon.mjs` when upgrading `luxon`). Webpack bundles still resolve **`luxon`** from `node_modules` as usual.
 
 After `npm run build`:
 
@@ -34,7 +36,7 @@ Do **not** deploy only `bundle.js` without **`admin.*.js`** when using the bundl
 
 ## npm audit (dev tooling)
 
-`vercel`, `webpack`, and other **devDependencies** pull transitive packages; `npm audit` warnings are often **CLI/build tools**, not your static site runtime. Review advisories; avoid blind **`npm audit fix --force`** on a template without testing.
+`webpack` and other **devDependencies** pull transitive packages; `npm audit` warnings are often **CLI/build tools**, not your static site runtime. This template does **not** pin the **Vercel CLI** in `package.json` (use **`npm run deploy`** → **`npx vercel@latest`** to avoid hundreds of CLI-only transitive packages in the lockfile). Review advisories; avoid blind **`npm audit fix --force`** without testing.
 
 ## Supabase
 

@@ -142,16 +142,12 @@ export class DataService {
 
       if (filename.includes('wishlist_')) {
         const userId = filename.replace('wishlist_', '');
-        const response = await fetch(`${this.apiBase}/wishlist`, {
-          method: 'POST',
+        const q = new URLSearchParams({ userId });
+        const response = await fetch(`${this.apiBase}/wishlist?${q}`, {
+          method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${this.getApiKey()}`,
           },
-          body: JSON.stringify({
-            action: 'load',
-            userId: userId,
-          }),
         });
         if (!response.ok) {
           throw new Error(`API request failed: ${response.status}`);
@@ -168,7 +164,9 @@ export class DataService {
 
       return null;
     } catch (error) {
-      console.error(`Secure API read error for ${filename}:`, error);
+      console.warn(
+        `Secure API read for ${filename} failed (${error?.message || error}); using local fallback`
+      );
       return null;
     }
   }
