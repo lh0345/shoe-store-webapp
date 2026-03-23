@@ -1,7 +1,7 @@
 # Deploy & fork checklist
 
 Vanilla JS storefront template: **contact via email / WhatsApp**, **no payment stack** in the app. Use this with [`ARCHITECTURE.md`](../ARCHITECTURE.md) and [`README.md`](../README.md).
-**Security posture:** [`SECURITY.md`](./SECURITY.md) · **Supabase (fork):** [`SUPABASE_FORK.md`](./SUPABASE_FORK.md)
+**Security posture:** [`SECURITY.md`](./SECURITY.md) · **Supabase / APIs / media / email:** [`INTEGRATIONS.md`](./INTEGRATIONS.md) · **Supabase (fork):** [`SUPABASE_FORK.md`](./SUPABASE_FORK.md)
 
 ## Git remote and push
 
@@ -46,7 +46,7 @@ Sessions and users live in **localStorage** with client-side checks only. Suitab
 
 ## Holiday banners
 
-Banners use **local calendar** `YYYY-MM-DD` ranges (not UTC-midnight parsing). **Invalid dates** (e.g. `2025-02-31`) and **end before start** are ignored for that banner. Tune dates in admin storage or defaults in `HolidayBannerService`.
+`HolidayBannerService` uses **[Luxon](https://moment.github.io/luxon/)** with IANA timezone **`Europe/Skopje`**: each `YYYY-MM-DD` is a **calendar day in North Macedonia**, including DST. **Invalid dates** (e.g. `2025-02-31`) and **end before start** are ignored for that banner. Admin labels note the zone; see **`src/services/HolidayBannerService.js`** (`HOLIDAY_BANNER_TIME_ZONE`).
 
 ## Contact & social placeholders
 

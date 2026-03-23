@@ -72,11 +72,11 @@ export function renderHolidayBanners(container) {
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Start Date <span class="optional-label">(leave empty for always-on)</span></label>
+              <label>Start Date <span class="optional-label">(Europe/Skopje; leave empty for always-on)</span></label>
               <input type="date" name="startDate" data-holiday-id="${banner.id}" value="${banner.startDate || ''}">
             </div>
             <div class="form-group">
-              <label>End Date <span class="optional-label">(leave empty for always-on)</span></label>
+              <label>End Date <span class="optional-label">(Europe/Skopje; leave empty for always-on)</span></label>
               <input type="date" name="endDate" data-holiday-id="${banner.id}" value="${banner.endDate || ''}">
             </div>
           </div>

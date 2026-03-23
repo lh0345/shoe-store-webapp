@@ -1,5 +1,10 @@
 /* HolidayBannerService.js - Macedonia holiday sales banners with countdown */
 
+import { DateTime } from 'luxon';
+
+/** All `YYYY-MM-DD` ranges are interpreted in this zone (North Macedonia). */
+export const HOLIDAY_BANNER_TIME_ZONE = 'Europe/Skopje';
+
 /**
  * True if y/m/d is a real calendar day (rejects 2025-02-31 etc.; JS Date rollover is not accepted).
  */
@@ -10,26 +15,28 @@ function isValidCalendarDay(y, m, d) {
   return dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d;
 }
 
-/** YYYY-MM-DD interpreted as local calendar day start (avoids UTC-only parsing quirks). */
-function parseLocalDayStart(ymd) {
+/** Start of calendar day in {@link HOLIDAY_BANNER_TIME_ZONE}, or null if invalid YYYY-MM-DD. */
+function skopjeStartOfDayFromYmd(ymd) {
   const parts = String(ymd).trim().split('-').map(Number);
-  if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) {
-    return new Date(NaN);
-  }
+  if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) return null;
   const [y, m, d] = parts;
-  if (!isValidCalendarDay(y, m, d)) return new Date(NaN);
-  return new Date(y, m - 1, d, 0, 0, 0, 0);
+  if (!isValidCalendarDay(y, m, d)) return null;
+  return DateTime.fromObject(
+    { year: y, month: m, day: d },
+    { zone: HOLIDAY_BANNER_TIME_ZONE }
+  ).startOf('day');
 }
 
-/** Inclusive end of local calendar day for YYYY-MM-DD. */
-function parseLocalDayEnd(ymd) {
+/** End of calendar day in {@link HOLIDAY_BANNER_TIME_ZONE}, or null if invalid YYYY-MM-DD. */
+function skopjeEndOfDayFromYmd(ymd) {
   const parts = String(ymd).trim().split('-').map(Number);
-  if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) {
-    return new Date(NaN);
-  }
+  if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) return null;
   const [y, m, d] = parts;
-  if (!isValidCalendarDay(y, m, d)) return new Date(NaN);
-  return new Date(y, m - 1, d, 23, 59, 59, 999);
+  if (!isValidCalendarDay(y, m, d)) return null;
+  return DateTime.fromObject(
+    { year: y, month: m, day: d },
+    { zone: HOLIDAY_BANNER_TIME_ZONE }
+  ).endOf('day');
 }
 
 export class HolidayBannerService {
@@ -81,7 +88,7 @@ export class HolidayBannerService {
   }
 
   getDefaultBanners() {
-    const currentYear = new Date().getFullYear();
+    const currentYear = DateTime.now().setZone(HOLIDAY_BANNER_TIME_ZONE).year;
 
     return [
       {
@@ -166,7 +173,7 @@ export class HolidayBannerService {
   }
 
   getActiveBanner() {
-    const now = new Date();
+    const now = DateTime.now().setZone(HOLIDAY_BANNER_TIME_ZONE);
 
     // Find first enabled banner that hasn't been dismissed
     for (const banner of this.banners) {
@@ -185,11 +192,11 @@ export class HolidayBannerService {
         return banner;
       }
 
-      // Check date range (local calendar days, inclusive)
-      const startDate = parseLocalDayStart(banner.startDate);
-      const endDate = parseLocalDayEnd(banner.endDate);
+      // Check date range (calendar days in Europe/Skopje, inclusive)
+      const startDate = skopjeStartOfDayFromYmd(banner.startDate);
+      const endDate = skopjeEndOfDayFromYmd(banner.endDate);
 
-      if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
+      if (!startDate?.isValid || !endDate?.isValid) {
         continue;
       }
       if (endDate < startDate) {
@@ -217,10 +224,10 @@ export class HolidayBannerService {
   }
 
   getCountdown(endDate) {
-    const now = new Date();
-    const end = parseLocalDayEnd(endDate);
-    if (Number.isNaN(end.getTime())) return null;
-    const diff = end - now;
+    const now = DateTime.now().setZone(HOLIDAY_BANNER_TIME_ZONE);
+    const end = skopjeEndOfDayFromYmd(endDate);
+    if (!end?.isValid) return null;
+    const diff = end.toMillis() - now.toMillis();
 
     if (diff <= 0) return null;
 

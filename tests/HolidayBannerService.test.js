@@ -1,4 +1,8 @@
-import { HolidayBannerService } from '../src/services/HolidayBannerService.js';
+import { DateTime } from 'luxon';
+import {
+  HolidayBannerService,
+  HOLIDAY_BANNER_TIME_ZONE,
+} from '../src/services/HolidayBannerService.js';
 
 describe('HolidayBannerService', () => {
   beforeEach(() => {
@@ -9,9 +13,18 @@ describe('HolidayBannerService', () => {
     jest.useRealTimers();
   });
 
-  test('selects Christmas banner on a December date in local time', () => {
+  test('uses Europe/Skopje for banner date logic', () => {
+    expect(HOLIDAY_BANNER_TIME_ZONE).toBe('Europe/Skopje');
+  });
+
+  test('selects Christmas banner on a December date in Europe/Skopje', () => {
     jest.useFakeTimers();
-    jest.setSystemTime(new Date(2025, 11, 15, 12, 0, 0));
+    jest.setSystemTime(
+      DateTime.fromObject(
+        { year: 2025, month: 12, day: 15, hour: 12 },
+        { zone: 'Europe/Skopje' }
+      ).toJSDate()
+    );
 
     const svc = new HolidayBannerService('testbrand');
     const banner = svc.getActiveBanner();
@@ -20,9 +33,14 @@ describe('HolidayBannerService', () => {
     expect(banner.id).toBe('christmas-2025');
   });
 
-  test('returns null when no default banner range includes the current date', () => {
+  test('returns null when no default banner range includes the current date in Skopje', () => {
     jest.useFakeTimers();
-    jest.setSystemTime(new Date(2025, 6, 15, 12, 0, 0));
+    jest.setSystemTime(
+      DateTime.fromObject(
+        { year: 2025, month: 7, day: 15, hour: 12 },
+        { zone: 'Europe/Skopje' }
+      ).toJSDate()
+    );
 
     const svc = new HolidayBannerService('testbrand');
     expect(svc.getActiveBanner()).toBeNull();
@@ -30,7 +48,12 @@ describe('HolidayBannerService', () => {
 
   test('skips banners with invalid YYYY-MM-DD or end before start', () => {
     jest.useFakeTimers();
-    jest.setSystemTime(new Date(2025, 11, 15, 12, 0, 0));
+    jest.setSystemTime(
+      DateTime.fromObject(
+        { year: 2025, month: 12, day: 15, hour: 12 },
+        { zone: 'Europe/Skopje' }
+      ).toJSDate()
+    );
 
     const svc = new HolidayBannerService('testbrand');
     const christmas = svc.getDefaultBanners().find((b) => b.id === 'christmas-2025');

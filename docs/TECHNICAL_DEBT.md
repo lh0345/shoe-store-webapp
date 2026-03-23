@@ -1,5 +1,11 @@
 # Technical debt & domain audits
 
+## Remediation — 2026-03-24 (Europe/Skopje holiday banners, INTEGRATIONS.md, Luxon)
+
+- **`HolidayBannerService`:** **`Europe/Skopje`** (IANA) for all `YYYY-MM-DD` ranges and countdown end-of-day, via **Luxon** (`HOLIDAY_BANNER_TIME_ZONE`). Default banner years follow **Skopje** “today”. **Webpack bundle** grows (~+70 KiB min) — acceptable for correct TZ semantics; lazy-loading the service would be a future optimization.
+- **`docs/INTEGRATIONS.md`:** Supabase reconfiguration, API patterns (client vs Edge vs `/api`), **Cloudinary** (media/CDN, secrets on server), **EmailJS** (browser templates, limits), **why admin is separate** from storefront (threat model, keys, RLS).
+- **Admin holiday UI:** date labels mention **Europe/Skopje**.
+
 ## Remediation — 2026-03-24 (LoginView submit tests, ARCHITECTURE links, env template)
 
 - **`tests/LoginView.test.js`:** Async submit path — **`authService.login`** called with username/password; failure shows **`#login-error`**. Success redirect (`location.href`) not asserted (jsdom **`Location`** `href` setter is not spyable).

@@ -33,6 +33,7 @@ This template is **Email / WhatsApp contact–oriented**; there is no payment st
 - **Store config** (brand, contact, colors, …): defaults in **`store.config.js`**, overridden by **`localStorage['storeConfig']`** when valid (`src/app.js`).
 - **Admin authentication** is **browser-only** (template-appropriate); do not rely on it for real multi-user security without a server session or hosted auth. See **`docs/SECURITY.md`**; Supabase/RLS fork notes: **`docs/SUPABASE_FORK.md`**.
 - **Social / WhatsApp** links and similar fields are intended to be **config-driven**; replace placeholders with real URLs/numbers for production forks.
+- **Holiday banners:** date ranges use **`Europe/Skopje`** via **Luxon** in `HolidayBannerService` (not the visitor’s browser timezone). Optional services (Supabase, media, email) are described in **[`docs/INTEGRATIONS.md`](./docs/INTEGRATIONS.md)**.
 
 ---
 

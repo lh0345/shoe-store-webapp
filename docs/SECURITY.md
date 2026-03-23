@@ -23,4 +23,4 @@ This document describes **what the stock template does not guarantee** so forks 
 
 - **`npm audit`** on **devDependencies** (CLI, bundler) often does **not** map to vulnerabilities in your **deployed static files**. Treat reports as **triage**, not automatic “must fix” for the browser bundle.
 
-For deploy and bundle entry, see [`docs/DEPLOY.md`](./DEPLOY.md).
+For deploy and bundle entry, see [`docs/DEPLOY.md`](./DEPLOY.md). For Supabase, Cloudinary, EmailJS, and admin vs storefront, see [`docs/INTEGRATIONS.md`](./INTEGRATIONS.md).

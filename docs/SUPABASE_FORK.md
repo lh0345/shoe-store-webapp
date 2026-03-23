@@ -2,6 +2,8 @@
 
 The template ships with **`src/config/supabase.js` exporting `supabase === null`** so the app never talks to Postgres from the browser until you deliberately wire it. This guide is for forks that want **Supabase Auth** and/or **Postgres** with **Row Level Security (RLS)**.
 
+**Broader context:** how to think about **APIs**, **Edge Functions**, **Cloudinary**, **EmailJS**, and **admin vs storefront** — see **[`INTEGRATIONS.md`](./INTEGRATIONS.md)**.
+
 ## 1. Prerequisites
 
 - A Supabase project ([supabase.com](https://supabase.com)).

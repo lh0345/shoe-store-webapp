@@ -16,7 +16,7 @@
  * - POST /api/wishlist - Update wishlist
  * - POST /api/orders - Create orders
  *
- * Template default: no browser DB. Re-enabling a client is a deliberate fork — see docs/DEPLOY.md and docs/SUPABASE_FORK.md (RLS, env).
+ * Template default: no browser DB. Re-enabling a client is a deliberate fork — see docs/DEPLOY.md, docs/SUPABASE_FORK.md (RLS), docs/INTEGRATIONS.md (APIs and services).
  */
 
 // Export null to prevent accidental usage

@@ -2,7 +2,7 @@
 
 A **vanilla JavaScript** storefront you can fork for **email / WhatsApp contact** workflows — **no in-app payment stack**. Data defaults to **`data/products.json`** with **localStorage** for admin overrides; see **[`ARCHITECTURE.md`](./ARCHITECTURE.md)** for the full data flow.
 
-**Deploy & bundle:** [`docs/DEPLOY.md`](./docs/DEPLOY.md) · **Security:** [`docs/SECURITY.md`](./docs/SECURITY.md) · **Supabase (fork):** [`docs/SUPABASE_FORK.md`](./docs/SUPABASE_FORK.md) · **Audit history:** [`docs/TECHNICAL_DEBT.md`](./docs/TECHNICAL_DEBT.md)
+**Deploy & bundle:** [`docs/DEPLOY.md`](./docs/DEPLOY.md) · **Integrations (Supabase, APIs, Cloudinary, EmailJS, admin):** [`docs/INTEGRATIONS.md`](./docs/INTEGRATIONS.md) · **Security:** [`docs/SECURITY.md`](./docs/SECURITY.md) · **Supabase (fork):** [`docs/SUPABASE_FORK.md`](./docs/SUPABASE_FORK.md) · **Audit history:** [`docs/TECHNICAL_DEBT.md`](./docs/TECHNICAL_DEBT.md)
 
 ---
 
@@ -61,6 +61,7 @@ shoe-store-template/
 ├── vercel.json
 ├── ARCHITECTURE.md
 ├── docs/DEPLOY.md
+├── docs/INTEGRATIONS.md
 ├── docs/SECURITY.md
 ├── docs/SUPABASE_FORK.md
 └── docs/TECHNICAL_DEBT.md
