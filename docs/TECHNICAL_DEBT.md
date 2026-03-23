@@ -100,7 +100,7 @@ Governance checklist: `.governance/subplans/domain_linkage_audit.md`. Re-run aft
 
 ### A11 — Webpack, Vercel, static vs dev server
 
-- **Observation:** `webpack.config.cjs` respects `mode`; production build minifies `dist/bundle.js`; `index.html` still uses ES modules by default.
+- **Observation:** `webpack.config.cjs` respects `mode`; production build minifies `dist/bundle.js`; `index.html` still uses ES modules by default. **GitHub Actions** (`.github/workflows/ci.yml`) runs lint, test, and build on push/PR to **`main`**.
 - **Risk:** Operators may deploy without switching entry or may expect server APIs on Vercel — behavior must match `ARCHITECTURE.md`.
 - **Bug-suspected:** None; strict `buildCommand` on Vercel may slow iteration — relax in dashboard if needed.
 

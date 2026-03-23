@@ -75,40 +75,29 @@ A basic vanilla JavaScript e-commerce webapp for displaying shoes. **This is NOT
 ## 📂 Actual Project Structure
 
 ```
-shoe-webapp/
-├── app.js                    # Main app (734 lines of vanilla JS)
-├── index.html               # Single page app
-├── main.css                 # Main styles
-├── server.py                # Python dev server
-├── jest.config.js           # Test config
-├── babel.config.js          # ES modules support
-├── config/
-│   └── store.config.js      # Basic config
+shoe-store-template/
+├── index.html                 # SPA shell (loads src/app.js as ES module)
+├── config.js                  # Static ENV_CONFIG for hosts without Python /config
 ├── data/
-│   └── products.js          # Local product data
-├── models/
-│   ├── Shoe.js             # Shoe model class
-│   ├── Catalog.js          # Product catalog
-│   └── User.js             # User model
-├── views/
-│   ├── HomeView.js         # Home page
-│   ├── ProductView.js      # Product details
-│   ├── CollectionView.js   # Product listing
-│   ├── WishlistView.js     # Wishlist page
-│   ├── AdminView.js        # Basic admin
-│   └── LoginView.js        # Login form
-├── services/
-│   ├── AuthService.js      # Basic auth (no real security)
-│   ├── ProductService.js   # Product operations
-│   ├── WishlistService.js  # Wishlist management
-│   ├── CurrencyService.js  # Currency toggle
-│   └── SocialService.js    # Social sharing
-├── utils/
-│   ├── ServiceContainer.js # Dependency injection
-│   ├── Application.js      # App initialization
-│   └── helpers.js          # Utility functions
-└── tests/
-    └── Shoe.test.js        # Basic model tests
+│   └── products.json          # Default catalog (fetched at runtime)
+├── public/css/                # Modular stylesheets
+├── src/
+│   ├── app.js                 # Entry: services, router, views
+│   ├── config/                # store.config.js, supabase.js (client disabled)
+│   ├── data/products.js       # Loads JSON → Catalog / Shoe
+│   ├── models/                # Shoe, Catalog, User
+│   ├── router/Router.js
+│   ├── services/              # Product, auth, wishlist, currency, DataService, …
+│   ├── utils/                 # navbar, viewSwitcher, helpers, …
+│   └── views/
+│       ├── home/, collection/, product/, wishlist/, login/
+│       └── admin/               # AdminView + admin products/settings/PDF/…
+├── tests/                     # Jest (jsdom)
+├── server.py                  # Python dev server + optional /api routes
+├── webpack.config.cjs         # Optional dist/bundle.js
+├── vercel.json
+├── ARCHITECTURE.md
+└── docs/TECHNICAL_DEBT.md
 ```
 
 ---
@@ -138,6 +127,8 @@ git push -u origin main
 ```
 
 **Vercel:** import the repo and keep the production branch on **`main`**; configuration lives in `vercel.json` at the project root. If the dashboard **build** step feels too heavy (lint + test + webpack), you can relax it there.
+
+**GitHub Actions:** on push or pull request to **`main`**, `.github/workflows/ci.yml` runs **`npm ci`**, **lint**, **tests**, and **webpack build** (same idea as the Vercel build command).
 
 **Husky:** after `npm install`, pre-commit runs **lint** then **tests**. Commits fail if either step fails.
 
