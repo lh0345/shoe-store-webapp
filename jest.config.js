@@ -13,5 +13,6 @@ export default {
     'src/router/**/*.js',
     'src/utils/**/*.js',
     'src/services/**/*.js',
+    'src/views/**/*.js',
   ],
 };

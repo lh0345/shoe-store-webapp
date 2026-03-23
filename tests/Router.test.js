@@ -89,4 +89,20 @@ describe('Router handleRoute', () => {
     await router.handleRoute();
     expect(notFound).toHaveBeenCalled();
   });
+
+  test('handleRoute falls back to home when a route handler throws', async () => {
+    const home = jest.fn();
+    const collection = jest.fn().mockRejectedValue(new Error('route failed'));
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    const router = new Router({ home, collection }, { autoInit: false });
+
+    go('/collection');
+    await router.handleRoute();
+
+    expect(collection).toHaveBeenCalled();
+    expect(home).toHaveBeenCalled();
+
+    consoleError.mockRestore();
+  });
 });

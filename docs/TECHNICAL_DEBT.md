@@ -51,6 +51,12 @@ Addressed findings from **A1 / A4 / A5 / A9** slices (see `.governance/STAGE_ASS
 - **A3 / `Router`:** Constructor accepts optional **`{ autoInit: false }`** so Jest can call **`handleRoute()`** without registering global listeners. **`tests/Router.test.js`** covers home, collection, wishlist, admin routes, **`/product`** without slug → **`notFound`**, slug routing, and unknown paths.
 - **A12:** **`jest.config.js`** `collectCoverageFrom` now includes **`src/router/**/*.js`**.
 
+## Remediation — 2026-03-24 (AdminView tests, Router error fallback)
+
+- **`tests/AdminView.test.js`:** **`AdminView.render()`** with mocked services — dashboard shell, stats, **`getAll()`** for products table, **`storeConfig`** from **`localStorage`** (settings field values).
+- **`tests/Router.test.js`:** **`handleRoute`** calls **`home`** when a bound route handler throws/rejects (matches **`Router.js`** catch fallback).
+- **`jest.config.js`:** **`collectCoverageFrom`** includes **`src/views/**/*.js`** so coverage runs include view modules touched by tests.
+
 ## Remediation — 2026-03-24 (Vercel CLI, jsPDF vendor, admin code-splitting)
 
 - **`vercel` (devDependency):** Upgraded to **v50** to track current CLI releases. **`npm audit`** may still report issues inside the CLI’s transitive graph; treat **`vercel` as a dev tool**, not the production browser bundle — revisit with **`npm audit fix`** / upstream releases periodically (avoid blind **`--force`**).
