@@ -1,0 +1,11 @@
+/* ============================================
+   MAIN CSS - Imports all component modules
+   ============================================ */
+
+/* Components */
+@import 'components/cards.css';
+@import 'components/buttons.css';
+@import 'components/forms.css';
+@import 'components/modals.css';
+@import 'components/badges.css';
+@import 'components/filters.css';

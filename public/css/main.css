@@ -1,0 +1,10 @@
+/* Main Stylesheet - Imports all CSS modules in correct order */
+
+/* 1. Design Tokens (Variables) */
+@import './css/variables.css';
+
+/* 2. Base Styles (Reset, Typography, Buttons) */
+@import './css/base.css';
+
+/* 3. Complete Styles (All components) */
+/* Keeping the rest in styles.css for now to avoid breaking anything */

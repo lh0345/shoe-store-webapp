@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KopackaMk — Step Into Style | Premium Footwear Collection</title>
+  <meta name="description" content="Discover premium footwear that combines comfort and style. From athletic sneakers to elegant boots, find your perfect pair at KopackaMk." />
+  <meta name="keywords" content="shoes, sneakers, boots, footwear, athletic shoes, casual shoes, premium footwear, KopackaMk" />
+  <meta name="author" content="KopackaMk Footwear" />
+  
+  <!-- Open Graph for Social Sharing -->
+  <meta property="og:title" content="KopackaMk — Step Into Style | Premium Footwear" />
+  <meta property="og:description" content="Discover premium footwear that combines comfort and style. Shop our latest collection." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yoursite.com/" />
+  <meta property="og:image" content="https://placehold.co/1200x630/2563EB/FFFFFF?text=KopackaMk" />
+  <meta property="og:site_name" content="KopackaMk Footwear" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="KopackaMk — Premium Footwear Collection" />
+  <meta name="twitter:description" content="Discover premium footwear that combines comfort and style." />
+  <meta name="twitter:image" content="https://placehold.co/1200x630/2563EB/FFFFFF?text=KopackaMk" />
+  
+  <!-- Additional SEO -->
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://yoursite.com/" />
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>👟</text></svg>" />
+  <link rel="manifest" href="/manifest.json?v=1" />
+
+  <!-- Content Security Policy is set in HTTP headers based on route -->
+
+  <!-- Aggressive Cache Control -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Modular CSS (bump ?v= when you ship CSS changes) -->
+  <link rel="stylesheet" href="/public/css/variables.css?v=1">
+  <link rel="stylesheet" href="/public/css/base.css?v=1">
+  <link rel="stylesheet" href="/public/css/layout.css?v=1">
+  <link rel="stylesheet" href="/public/css/components.css?v=1">
+  <link rel="stylesheet" href="/public/css/pages.css?v=1">
+  <link rel="stylesheet" href="/public/css/utilities.css?v=1">
+  
+  <!-- GitHub Pages SPA redirect handler -->
+  <script src="/scripts/spa-redirect.js"></script>
+</head>
+<body>
+  <!-- Page Transition Progress Bar -->
+  <div id="page-progress" class="page-progress"></div>
+  
+  <!-- Holiday Sales Banner -->
+  <div id="holiday-banner" class="holiday-banner" style="display:none;">
+    <div class="holiday-banner-content">
+      <span class="holiday-banner-icon">🎉</span>
+      <div class="holiday-banner-text">
+        <strong id="holiday-banner-title">Special Offer!</strong>
+        <span id="holiday-banner-message">Limited time sale</span>
+      </div>
+      <div class="holiday-banner-countdown" id="holiday-banner-countdown"></div>
+      <button type="button" class="holiday-banner-close" id="holiday-banner-close" aria-label="Close banner" tabindex="0">×</button>
+    </div>
+  </div>
+  
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <div id="app" class="app">
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/" class="nav-logo">
+          <span class="logo-icon">◆</span>
+          <span class="logo-text" id="brand-name">Loading...</span>
+        </a>
+        
+        <!-- Mobile Menu Button -->
+        <button 
+          class="mobile-menu-btn" 
+          id="mobile-menu-btn" 
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="nav-links"
+        >
+          <div class="hamburger-container">
+            <span class="hamburger-line top-line"></span>
+            <span class="hamburger-line middle-line"></span>
+            <span class="hamburger-line bottom-line"></span>
+            <div class="hamburger-glow"></div>
+          </div>
+          <div class="menu-icon-decoration">
+            <svg class="menu-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+        </button>
+        
+        <div class="nav-links" id="nav-links" role="navigation" aria-label="Main navigation">
+          <a href="/collection" class="nav-link customer-only">Collection</a>
+          <a href="/wishlist" class="nav-link customer-only wishlist-link" id="wishlist-link" title="Wishlist">
+            ❤️
+            <span class="wishlist-badge" id="wishlist-badge">0</span>
+          </a>
+          <button id="currency-toggle" class="currency-toggle customer-only">💵 MKD</button>
+          <a href="/admin" class="nav-link admin-only admin-hidden">Admin</a>
+          <button id="nav-logout" class="btn btn-secondary admin-only admin-hidden">Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+
+    <!-- Mobile Navigation Panel -->
+    <div class="mobile-nav-panel" id="mobile-nav-panel">
+      <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Close navigation menu">✕</button>
+      
+      <div class="mobile-nav-links">
+        <a href="/collection" class="nav-link customer-only">Collection</a>
+        <a href="/wishlist" class="nav-link customer-only wishlist-link" id="mobile-wishlist-link" title="Wishlist">
+          ❤️ Wishlist
+          <span class="wishlist-badge" id="mobile-wishlist-badge">0</span>
+        </a>
+        <button id="mobile-currency-toggle" class="nav-link currency-toggle customer-only">💵 MKD</button>
+        <a href="/admin" class="nav-link admin-only admin-hidden">Admin</a>
+        <button id="mobile-nav-logout" class="nav-link-cta btn btn-secondary admin-only admin-hidden">Logout</button>
+      </div>
+
+      <div class="mobile-nav-footer">
+        <p>&copy; 2025 KopackaMk. All rights reserved.</p>
+      </div>
+    </div>
+
+    <header class="hero" id="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="hero-title-line">Footwear</span>
+          <span class="hero-title-line hero-title-emphasis">Step Into Style</span>
+        </h1>
+        <a href="/collection" class="hero-cta">Shop Now</a>
+      </div>
+      <button class="hero-scroll" id="hero-explore" aria-label="Scroll down">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+    </header>
+
+    <main id="main" class="main"></main>
+
+    <!-- Scroll to top button -->
+    <button class="scroll-to-top" id="scroll-to-top" aria-label="Scroll to top">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-section-main">
+          <h3 class="footer-title">
+            <span class="logo-icon">◆</span> <span id="footer-brand">Loading...</span>
+          </h3>
+          <a href="tel:" id="footer-phone" class="btn btn-primary footer-contact-btn">Contact Us</a>
+        </div>        
+        
+        <div class="footer-section-right">
+          <h4 class="footer-heading">Connect</h4>
+          <div class="footer-social" id="footer-social">
+            <!-- Social links will be populated from admin settings -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> <span id="copyright-brand">Loading...</span>. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Load environment config -->
+  <script src="/config.js"></script>
+
+  <script src="/src/app.js?v=1" type="module"></script>
+</body>
+</html>

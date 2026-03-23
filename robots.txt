@@ -1,0 +1,15 @@
+# robots.txt - Search Engine Crawler Rules
+# Allow all search engines to crawl the site
+
+User-agent: *
+Allow: /
+
+# Sitemap location (update when implementing sitemap)
+# Sitemap: https://yoursite.com/sitemap.xml
+
+# Disallow admin pages from indexing
+Disallow: /admin
+Disallow: /admin-login
+
+# Crawl delay (optional, helps prevent server overload)
+Crawl-delay: 1

@@ -1,0 +1,12 @@
+<svg width="384" height="384" viewBox="0 0 384 384" xmlns="http://www.w3.org/2000/svg">
+  <rect width="384" height="384" fill="#2563eb" rx="38.400000000000006"/>
+  <g transform="translate(38.400000000000006, 153.60000000000002)">
+    <!-- Shoe sole -->
+    <ellipse cx="153.6" cy="147.456" rx="138.24" ry="27.648" fill="#1e40af"/>
+    <!-- Shoe body -->
+    <ellipse cx="153.6" cy="73.728" rx="122.88" ry="46.08" fill="#ffffff"/>
+    <!-- Shoe laces -->
+    <rect x="138.24" y="27.648" width="30.72" height="9.216" fill="#2563eb"/>
+    <rect x="138.24" y="40.550399999999996" width="30.72" height="9.216" fill="#2563eb"/>
+  </g>
+</svg>

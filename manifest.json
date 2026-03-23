@@ -1,0 +1,14 @@
+{
+  "name": "KopackaMk - Premium Footwear",
+  "short_name": "KopackaMk",
+  "description": "Discover premium footwear that combines comfort and style. From athletic sneakers to elegant boots, find your perfect pair.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["shopping", "lifestyle"],
+  "icons": []
+}
